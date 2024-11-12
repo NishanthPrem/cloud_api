@@ -55,7 +55,7 @@ resource "aws_iam_role_policy_attachment" "lambda_dynamodb_attach" {
 }
 
 resource "aws_lambda_function" "cloud_api_lambda" {
-  function_name = "cloudApiLambda"
+  function_name = var.lambda_function_name
   role          = aws_iam_role.lambda_exec_role.arn
   handler       = "lambda_function.lambda_handler"
   runtime       = "python3.12"
