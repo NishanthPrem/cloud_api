@@ -1,7 +1,7 @@
 
 # Cloud API with AWS Lambda and DynamoDB
 
-This project provides an API endpoint that retrieves data from a DynamoDB table and returns it in JSON format. The project is built using AWS services, including **Lambda**, **DynamoDB**, and **IAM** for access management. The project infrastructure is managed with **Terraform** to allow easy deployment and configuration.
+This project sets up a Lambda function that reads data from an AWS DynamoDB table and returns it as a JSON response via a Lambda function URL. The project is managed using Terraform and includes CI/CD pipelines configured with GitHub Actions to automate infrastructure deployment and testing.
 
 ## Table of Contents
 1. [Project Overview](#project-overview)
@@ -14,7 +14,10 @@ This project provides an API endpoint that retrieves data from a DynamoDB table 
 8. [Improvements](#improvements)
 
 ## Project Overview
-This API leverages AWS Lambda to fetch and serve data from a DynamoDB table when accessed through a Lambda Function URL. The configuration is managed by Terraform, allowing seamless provisioning and deployment of the resources.
+
+- **AWS Lambda**: A function that queries data from a DynamoDB table and returns it as a JSON response.
+- **DynamoDB**: A table (`cloud-api-db`) storing the data that the Lambda function queries.
+- **CI/CD**: Continuous Integration and Continuous Deployment pipelines configured with GitHub Actions to automate the deployment and testing of the Lambda function.
 
 ![alt text](image.png)
 
