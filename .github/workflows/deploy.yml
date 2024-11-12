@@ -1,0 +1,80 @@
+name: Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform-init:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.9.8
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+  terraform-plan:
+    needs: terraform-init
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.9.8
+
+      - name: Terraform Plan
+        run: terraform plan
+
+  terraform-apply:
+    needs: terraform-plan
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.9.8
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+
+  lambda-test:
+    needs: terraform-apply
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Run Lambda Test
+        run: |
+          # Send the request to your Lambda function URL and capture the output
+          response=$(curl -s https://pmoi4ik4q3mqnhaz2nmkrcazaq0pgwlp.lambda-url.us-east-1.on.aws/x -X GET)
+
+          # Output the response to the GitHub Actions log
+          echo "Lambda function response: $response"
+
+          # Optionally, set a GitHub Actions output if you need it for other jobs
+          echo "::set-output name=lambda_response::$response"
