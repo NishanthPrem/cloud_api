@@ -5,10 +5,9 @@ This project sets up a Lambda function that reads data from an AWS DynamoDB tabl
 
 ## Table of Contents
 1. [Project Overview](#project-overview)
-2. [Prerequisites](#prerequisites)
-3. [Usage](#usage)
-4. [Project Structure](#project-structure)
-5. [Improvements](#improvements)
+2. [Tools](#tools)
+3. [Project Structure](#project-structure)
+4. [Improvements](#improvements)
 
 ## Project Overview
 
@@ -18,7 +17,7 @@ This project sets up a Lambda function that reads data from an AWS DynamoDB tabl
 
 ![alt text](image.png)
 
-## Prerequisites
+## Tools
 - **AWS Account** with programmatic access.
 - **Terraform** (v1.0 or higher).
 - **AWS CLI** configured with the necessary permissions.
@@ -38,27 +37,6 @@ curl -X GET https://pmoi4ik4q3mqnhaz2nmkrcazaq0pgwlp.lambda-url.us-east-1.on.aws
 ```
 
 If everything is set up correctly, this should return the JSON data from the DynamoDB table.
-
-## Usage
-### Adding Data to DynamoDB
-Manually add items to the DynamoDB table (`cloud-api-db`) via the AWS Console or CLI.
-
-Example CLI command to add data:
-```bash
-aws dynamodb put-item     --table-name cloud-api-db     --item '{
-        "id": {"S": "resume"},
-        "basics": {"M": {
-            "name": {"S": "Nishanth Prem"},
-            "email": {"S": "nishanthprem8@gmail.com"},
-            "phone": {"S": "(623) 632-8787"},
-            "location": {"M": {
-                "city": {"S": "Tempe"},
-                "countryCode": {"S": "USA"},
-                "region": {"S": "California"}
-            }}
-        }}
-    }'
-```
 
 ## Project Structure
 - **`main.tf`**: Contains all Terraform resources to deploy the Lambda function, DynamoDB table, and IAM policies.
