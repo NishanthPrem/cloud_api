@@ -1,17 +1,14 @@
 
 # Cloud API with AWS Lambda and DynamoDB
 
-This project sets up a Lambda function that reads data from an AWS DynamoDB table and returns it as a JSON response via a Lambda function URL. The project is managed using Terraform and includes CI/CD pipelines configured with GitHub Actions to automate infrastructure deployment and testing.
+This project sets up a Lambda function that reads data from an AWS DynamoDB table and returns it as a JSON response via a Lambda function URL. The project is managed using Terraform and includes CI/CD pipelines configured with GitHub Actions to automate python lambda function updates.
 
 ## Table of Contents
 1. [Project Overview](#project-overview)
 2. [Prerequisites](#prerequisites)
-3. [Setup Instructions](#setup-instructions)
-4. [Terraform Configuration](#terraform-configuration)
-5. [Testing the Lambda Function](#testing-the-lambda-function)
-6. [Usage](#usage)
-7. [Project Structure](#project-structure)
-8. [Improvements](#improvements)
+3. [Usage](#usage)
+4. [Project Structure](#project-structure)
+5. [Improvements](#improvements)
 
 ## Project Overview
 
@@ -27,43 +24,6 @@ This project sets up a Lambda function that reads data from an AWS DynamoDB tabl
 - **AWS CLI** configured with the necessary permissions.
 - **Python 3.12** or compatible Python runtime.
 
-## Setup Instructions
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/your-repo/cloud-api
-   cd cloud-api
-   ```
-
-2. **Configure AWS CLI**:
-   Ensure your AWS CLI is configured to access your AWS account:
-   ```bash
-   aws configure
-   ```
-
-3. **Initialize Terraform**:
-   ```bash
-   terraform init
-   ```
-
-4. **Apply the Terraform Configuration**:
-   This step will create the DynamoDB table, IAM roles, Lambda function, and Lambda Function URL.
-   ```bash
-   terraform apply
-   ```
-   Type `yes` when prompted to confirm.
-
-5. **Upload Lambda Function Code**:
-   Ensure your Lambda function code (`lambda_function.py`) is available in the project directory. Terraform will package it and deploy it to AWS.
-
-## Terraform Configuration
-The Terraform configuration does the following:
-
-- Creates a **DynamoDB** table (`cloud-api-db`) to store JSON data.
-- Sets up an **IAM Role** and **Policy** to grant Lambda access to DynamoDB.
-- Deploys a **Lambda Function** (`cloudApiLambda`) that retrieves data from DynamoDB.
-- Configures a **Lambda Function URL** to enable HTTP access to the function.
-
 ### Key Terraform Resources
 - `aws_dynamodb_table`: Creates the DynamoDB table.
 - `aws_iam_role` & `aws_iam_policy`: Define permissions for the Lambda function.
@@ -74,10 +34,10 @@ The Terraform configuration does the following:
 To test the Lambda function, use a `curl` command or a tool like Postman:
 
 ```bash
-curl -X GET <your_lambda_function_url>
+curl -X GET https://pmoi4ik4q3mqnhaz2nmkrcazaq0pgwlp.lambda-url.us-east-1.on.aws/
 ```
 
-If everything is set up correctly, this should return the JSON data from your DynamoDB table.
+If everything is set up correctly, this should return the JSON data from the DynamoDB table.
 
 ## Usage
 ### Adding Data to DynamoDB
